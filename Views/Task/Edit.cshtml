@@ -1,0 +1,41 @@
+﻿
+@model TaskEntity
+
+<div class="shadow rounded">
+    <h2 class="text-muted mb-3">Edit task</h2>
+    <form method="post">
+        <div class="container">
+            <div class="mb-3 row">
+                <label asp-for="Name" class="form-label">Task Name:</label>
+                <input asp-for="Name" name="name" type="text" class="form-control"></input>
+                <span asp-validation-for="Name"></span>
+            </div>
+            <div class="mb-3 row">
+            <label asp-for="Priority" class="form-label">Type of Task:</label>
+            <select asp-for="Priority" class="form-select mb-3 shadow" asp-items="Html.GetEnumSelectList<Priority>()"></select>
+            </div>
+            <div class="mb-3 row">
+                <label asp-for="Description" class="form-label">Description:</label>
+                <textarea asp-for="Description" class="form-control shadow"></textarea>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <button id="createTask" class="btn-success rounded shadow w-25">Edit</button>
+                        <button asp-controller="Home" asp-action="Index" id="back" class="btn-danger rounded shadow w-25">Back</button>
+                        <p></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    
+</div>
+
+@section Scripts
+{
+    @{
+        <partial name="_ValidationScriptsPartial"></partial>
+    }
+
+}

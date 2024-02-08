@@ -1,0 +1,71 @@
+﻿@model TaskEntity
+
+<div class="shadow rounded">
+    <h2 class="text-muted mb-3">Details:</h2>
+    <form method="post">
+        <div class="container">
+            <div class="mb-3 row">
+                <label asp-for="Name" class="form-label">Task Name:</label>
+                <input asp-for="Name" disabled name="name" type="text" class="form-control"></input>
+                <span asp-validation-for="Name"></span>
+            </div>
+            <div class="mb-3 row">
+                <label asp-for="Priority" class="form-label">Type of Task:</label>
+                <input asp-for="Priority" disabled name="name" type="text" class="form-control"></input>
+            </div>
+            <div class="mb-3 row">
+                <label asp-for="Description" class="form-label">Description:</label>
+                <textarea asp-for="Description" disabled class="form-control shadow"></textarea>
+            </div>
+            <div class="mb-3 row">
+                <label asp-for="Name" class="form-label">Status:</label>
+                <input asp-for="Status" disabled name="name" type="text" class="form-control"></input>
+            </div>
+            <div class="mb-3 row">
+                <label asp-for="Name" class="form-label">Added:</label>
+                <input asp-for="DateTime" disabled name="name" type="text" class="form-control"></input>
+            </div>
+
+            <div class="container ">
+                <div class="row">
+                    <div class="col-12 p-2 row">
+                        @if (Model.Status == Status.Canceled)
+                        {
+                            <div class="p-2 col-4">
+                                <button asp-controller="Task" asp-action="MarkAsInProgress" asp-route-id="@Model.Id"  id="back" class="btn-success rounded shadow w-100">Continue Task</button>
+                            </div>
+                        }
+                        @if (Model.Status == Status.Completed)
+                        {
+                            <div class="p-2 col-4">
+                                <button asp-controller="Task" asp-action="MarkAsCanceled" asp-route-id="@Model.Id" id="back" class="btn-danger rounded shadow w-100">Cancel Task</button>
+                            </div>
+                            <div class="p-2 col-4">
+                                <button asp-controller="Task" asp-action="MarkAsInProgress" asp-route-id="@Model.Id" id="back" class="btn-success rounded shadow w-100">Continue Task</button>
+                            </div>
+                        }
+                        <div class="p-2 col-4">
+                            <button asp-controller="Home" asp-action="Index" id="back" class="btn-outline-primary rounded shadow w-100">Back</button>
+                        </div>
+
+                        <div>
+
+                            <a asp-controller="Task" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning "><i class="bi bi-pencil-square ">Edit</i></a>
+
+                            <a asp-controller="Task" asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger"><i class="bi bi-trash3">Delete</i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+</div>
+
+@section Scripts
+{
+    @{
+        <partial name="_ValidationScriptsPartial"></partial>
+    }
+
+}

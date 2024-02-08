@@ -1,0 +1,121 @@
+﻿@model List<TaskEntity>
+<main>
+
+    <div class="p-2 col-12 offset-9 ">
+        <a class="nav-link text-white bg-success rounded p-3 w-25 text-center shadow" asp-area="" asp-controller="Task" asp-action="Create"><i class="bi bi-plus-circle"></i>Add New Task</a>
+    </div>
+
+    
+    <div class="container p-1 ">
+        <div class="row pb-3 shadow rounded p-2">
+            <H3>In Progress:</H3>
+            @foreach (TaskEntity task in Model)
+            {
+                @if (task.Status == Status.InProgress)
+                {
+                    <div class="col-lg-4 col-sm-5">
+                        <div class="row p-2">
+                            <div class="col-12 p-1">
+                                <div class="card rounded" style="width: 13rem;">
+                                    <div class="bg-primary rounded p-1">
+                                        <h4 class="card-title text-center text-white" style="line-height:2">@task.Name</h4>
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="text-end text-white p-1">@task.Priority </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="p-1">
+                                        <a class="btn btn-primary w-100" asp-controller="Task" asp-action="Details" asp-route-id="@task.Id">Details</a>
+                                        </div>
+                                        <div class="p-1">
+                                          
+                                                <div class="row">
+                                                    <div class="col-6">
+                                        <a class="btn btn-success w-100 " asp-controller="Task" asp-action="MarkAsComplete" asp-route-id="@task.Id"><i class="bi bi-check-circle"></i></a>
+                                                    </div>
+                                                    <div class="col-6">
+                                        <a class="btn btn-danger w-100 " asp-controller="Task" asp-action="MarkAsCanceled" asp-route-id="@task.Id"><i class="bi bi-x-circle"></i></a>
+                                                    </div>
+                                                
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+        <div class="row pb-3 shadow rounded p-2">
+            <H3>Completed:</H3>
+            @foreach (TaskEntity task in Model)
+            {
+                @if (task.Status == Status.Completed)
+                {
+                    <div class="col-lg-4 col-sm-5">
+                        <div class="row p-2">
+                            <div class="col-12 p-1">
+                                <div class="card rounded" style="width: 13rem;">
+                                    <div class="bg-success rounded p-1">
+                                        <h4 class="card-title text-center text-white" style="line-height:2">@task.Name</h4>
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="text-end text-white p-1">@task.Priority </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <a class="btn btn-primary" asp-controller="Task" asp-action="Details" asp-route-id="@task.Id">Details</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+        <div class="row pb-2 shadow rounded p-2">
+            <H3>Canceled:</H3>
+            @foreach (TaskEntity task in Model)
+            {
+                @if (task.Status == Status.Canceled)
+                {
+                    <div class="col-lg-4 col-sm-5">
+                        <div class="row p-2">
+                            <div class="col-12 p-1">
+                                <div class="card rounded" style="width: 13rem;">
+                                    <div class="bg-danger rounded">
+                                        <h4 class="card-title text-center text-white" style="line-height:2">@task.Name</h4>
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="text-end text-white p-1">@task.Priority </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <a class="btn btn-primary" asp-controller="Task" asp-action="Details" asp-route-id="@task.Id">Details</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+
+
+
+
+</main>
+
