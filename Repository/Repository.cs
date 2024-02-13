@@ -15,16 +15,16 @@ namespace ToDoList.Repository
             _dbContext = dbContext;
             this.dbSet = dbContext.Set<T>();
         }
-        public async void Add(T item)
+        public async Task Add(T item)
         {
             await _dbContext.AddAsync(item);
         }
 
-        public T Get(Expression<Func<T, bool>> filter)
+        public async Task<T> Get(Expression<Func<T, bool>> filter)
         {
             IQueryable<T> query = dbSet;
             query = query.Where(filter);
-            return query.FirstOrDefault();
+            return await query.FirstOrDefaultAsync();
         }
 
         public IEnumerable<T> GetAll()
@@ -32,7 +32,7 @@ namespace ToDoList.Repository
             return dbSet.ToList();
         }
 
-        public  void Remove(T item)
+        public void Remove(T item)
         {
              dbSet.Remove(item);
         }
@@ -41,6 +41,7 @@ namespace ToDoList.Repository
         {
             dbSet.RemoveRange(values);
         }
+
 
     }
 }
