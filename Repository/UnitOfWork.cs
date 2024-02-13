@@ -13,9 +13,9 @@ namespace ToDoList.Repository
             Task = new TaskRepository(dbContext);
         }
 
-        public void Save()
+        public async Task Save()
         {
-            _dbContext.SaveChanges();
+           await _dbContext.SaveChangesAsync();
         }
     }
 }

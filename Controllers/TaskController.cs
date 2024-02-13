@@ -19,7 +19,7 @@ namespace ToDoList.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Create(TaskEntity task)
+        public async Task<IActionResult> Create(TaskEntity task)
         {
             var query = (from Task in _unitOfWork.Task.GetAll()
                          where Task.Name == task.Name
@@ -37,8 +37,8 @@ namespace ToDoList.Controllers
                         DateTime = DateTime.Today,
                     };
 
-                    _unitOfWork.Task.Add(entity);
-                    _unitOfWork.Save();
+                    await _unitOfWork.Task.Add(entity);
+                    await _unitOfWork.Save();
                     TempData["success"] = "Task created";
                     return RedirectToAction("Index", "Home");
                 }
@@ -54,17 +54,17 @@ namespace ToDoList.Controllers
                 return View();
             }
         }
-        public IActionResult Edit(long? id)
+        public async Task<IActionResult> Edit(long? id)
         {
             if (id == null || id == 0)
             {
                 return NotFound();
             }
-            TaskEntity? task = _unitOfWork.Task.Get(u => u.Id == id);
+            TaskEntity? task = await _unitOfWork.Task.Get(u => u.Id == id);
             return View(task);
         }
         [HttpPost]
-        public IActionResult Edit(TaskEntity task)
+        public async Task<IActionResult> Edit(TaskEntity task)
         {
             var query = (from Task in _unitOfWork.Task.GetAll()
                          where Task.Name == task.Name
@@ -83,7 +83,7 @@ namespace ToDoList.Controllers
                     };
 
                     _unitOfWork.Task.Update(entity);
-                    _unitOfWork.Save();
+                    await _unitOfWork.Save();
                     TempData["success"] = "Task Updated";
                     return RedirectToAction("Index", "Home");
                 }
@@ -99,71 +99,71 @@ namespace ToDoList.Controllers
                 return View();
             }
         }
-        public IActionResult Delete(long? id)
+        public async Task<IActionResult> Delete(long? id)
         {
             if (id == null || id == 0)
             {
                 return NotFound();
             }
-            TaskEntity? task = _unitOfWork.Task.Get(u => u.Id == id);
+            TaskEntity? task = await _unitOfWork.Task.Get(u => u.Id == id);
             return View(task);
         }
         [HttpPost]
-        public IActionResult Delete(TaskEntity task)
+        public  async Task <IActionResult> Delete(TaskEntity task)
         {
                 _unitOfWork.Task.Remove(task);
-                _unitOfWork.Save();
+                await _unitOfWork.Save();
                 TempData["success"] = "Task Deleted";
                 return RedirectToAction("Index", "Home");
         }
-        public IActionResult MarkAsComplete(long? id)
+        public async Task<IActionResult> MarkAsComplete(long? id)
         {
             if (id == null || id == 0)
             {
                 return NotFound();
             }
-            TaskEntity? task = _unitOfWork.Task.Get(u => u.Id == id);
+            TaskEntity? task = await _unitOfWork.Task.Get(u => u.Id == id);
             task.Status = Status.Completed;
             _unitOfWork.Task.Update(task);
-            _unitOfWork.Save();
+            await _unitOfWork.Save();
             TempData["success"] = "Task Completed";
             return RedirectToAction("Index", "Home");
         }
 
-        public IActionResult MarkAsCanceled(long? id)
+        public async Task<IActionResult> MarkAsCanceled(long? id)
         {
             if (id == null || id == 0)
             {
                 return NotFound();
             }
-            TaskEntity? task = _unitOfWork.Task.Get(u => u.Id == id);
+            TaskEntity? task = await _unitOfWork.Task.Get(u => u.Id == id);
             task.Status = Status.Canceled;
             _unitOfWork.Task.Update(task);
-            _unitOfWork.Save();
+            await _unitOfWork.Save();
             TempData["success"] = "Task Canceled";
             return RedirectToAction("Index", "Home");
         }
 
-        public IActionResult MarkAsInProgress(long? id)
+        public async Task<IActionResult> MarkAsInProgress(long? id)
         {
             if (id == null || id == 0)
             {
                 return NotFound();
             }
-            TaskEntity? task = _unitOfWork.Task.Get(u => u.Id == id);
+            TaskEntity? task = await _unitOfWork.Task.Get(u => u.Id == id);
             task.Status = Status.InProgress;
             _unitOfWork.Task.Update(task);
-            _unitOfWork.Save();
+            await _unitOfWork.Save();
             TempData["success"] = "Task Returned";
             return RedirectToAction("Index", "Home");
         }
-        public IActionResult Details(long? id)
+        public async Task<IActionResult> Details(long? id)
         {
             if (id == null || id == 0)
             {
                 return NotFound();
             }
-            TaskEntity? task = _unitOfWork.Task.Get(u => u.Id == id);
+            TaskEntity? task =await _unitOfWork.Task.Get(u => u.Id == id);
             return View(task);
         }
 
