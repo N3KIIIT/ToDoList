@@ -27,9 +27,9 @@ namespace ToDoList.Repository
             return await query.FirstOrDefaultAsync();
         }
 
-        public IEnumerable<T> GetAll()
+        public  IEnumerable<T> GetAll()
         {
-            return dbSet.ToList();
+            return  dbSet.ToList();
         }
 
         public void Remove(T item)
