@@ -21,7 +21,7 @@ namespace ToDoList.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(TaskEntity task)
         {
-            var query = (from Task in _unitOfWork.Task.GetAll()
+            var query = (from Task in (_unitOfWork.Task.GetAll())
                          where Task.Name == task.Name
                          select Task.Name).FirstOrDefault();
             if (query.IsNullOrEmpty())
@@ -68,7 +68,8 @@ namespace ToDoList.Controllers
         {
             var query = (from Task in _unitOfWork.Task.GetAll()
                          where Task.Name == task.Name
-                         select Task.Name).FirstOrDefault();
+                         select Task).ToList();
+
             if (query.IsNullOrEmpty())
             {
                 if (ModelState.IsValid)
